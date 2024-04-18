@@ -1,0 +1,160 @@
+
+Importnat Note About Dax Functions
+
+
+*********************************
+
+عدد القيم فى الجدول الاساسى التى ليست موجوده فى الجدول الاخر ال 
+many
+
+
+count values from table one  that not in seconde  many table dax
+
+
+
+CountNotInSecondTable =
+VAR ValuesInFirstTable = VALUES('Projects'[ProjectId])
+VAR ValuesInSecondTable = VALUES('ObjectivesValues'[Title])
+VAR ValuesNotInSecondTable = EXCEPT(ValuesInFirstTable, ValuesInSecondTable)
+RETURN
+COUNTROWS(ValuesNotInSecondTable)
+
+
+
+**********************************
+Max_month_name_
+اكثر شهر مبيعا فى السنة المختارة
+VAR vSummary =
+    ADDCOLUMNS (
+        VALUES ( 'CALENDAR'[month] ),
+        "cSumSales",
+            CALCULATE (
+                SUM ( products[price] )
+            )
+    )
+RETURN
+    MINX (
+        TOPN (
+            1,
+            vSummary,
+            [cSumSales], DESC
+        ),
+        'CALENDAR'[month]
+    )
+
+
+************************************
+
+Max_product_name_
+
+اسم اكثر منتجا مبيعا فى السنة المختارة
+
+
+
+VAR vSummary =
+    ADDCOLUMNS (
+        VALUES ( products[Product] ),
+        "cSumSales",
+            CALCULATE (
+                SUM ( products[price] )
+            )
+    )
+RETURN
+    MINX (
+        TOPN (
+            1,
+            vSummary,
+            [cSumSales], DESC
+        ),
+        products[Product]
+    )
+	
+************************************
+
+/*مجموع اكثر شهر مبيعا فى السنة المختارة */
+
+max_sum_product _by month =
+
+
+var tbl = 
+SUMMARIZE
+('products',
+'CALENDAR'[month],
+'CALENDAR'[year],
+"Total Sold",
+SUM('products'[price]))
+
+
+return
+MAXX(tbl,[Total Sold])
+/*مجموع اكثر شهر مبيعا فى السنة المختارة */
+
+
+****************************************
+max_sum_product _by year
+
+مجموع اكثر كمية مباعة فى السنة المختارة
+
+max_sum_product _by year = 
+
+
+var tbl = 
+SUMMARIZE
+('products',
+'products'[Product],
+'CALENDAR'[year],
+"Total Sold",
+SUM('products'[price]))
+
+return
+MAXX(tbl,[Total Sold])
+
+************************************
+
+2-first_sum_sales =
+/*مجموع اول مبيعات للموظف*/
+
+CALCULATE(SUM(Emp_city[Sales]),FIRSTDATE(Emp_city[Date]))
+
+*************************************
+2-last_sum_sales
+
+*مجموع اخر مبيعات للموظف*/
+
+CALCULATE(SUM(Emp_city[Sales]),LASTDATE(Emp_city[Date]))
+
+
+**************************************
+
+تاريخ اول عملية
+
+FIRSTDATE = FIRSTDATE(Emp_city[Date])
+
+تاريخ اخر عملية
+
+LASTDATE = LASTDATE(Emp_city[Date])
+
+*****************************************
+
+اسم اول مدينة تمت فيها عملية البيع
+
+firts_city_sales =
+
+CALCULATE(MAX(Emp_city[City]),FIRSTDATE(Emp_city[Date]))
+
+********************************************
+اسم اخرمدينة  تمت فيها عملية البيع
+last_city_sales
+
+CALCULATE(min(Emp_city[City]),LASTDATE(Emp_city[Date]))
+
+*********************************************
+فى حالة وجوود اكثر من مدينة 
+solve_many_cities =
+
+CALCULATE(
+    CONCATENATEX (
+DISTINCT(emp_2),emp_2[City],","
+  ),LASTDATE(emp_2[sales_Date]))
+  
+**************************************************
