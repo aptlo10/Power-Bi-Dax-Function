@@ -1,4 +1,5 @@
-عدد القيم فى الجدول الاساسى التى ليست موجوده فى الجدول الاخر ال many
+عدد القيم فى الجدول الاساسى التى ليست موجوده فى الجدول الاخر ال 
+many
 
 
 count values from table one  that not in seconde  many table dax
