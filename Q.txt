@@ -1,0 +1,16 @@
+عدد القيم فى الجدول الاساسى التى ليست موجوده فى الجدول الاخر ال many
+
+
+count values from table one  that not in seconde  many table dax
+
+
+
+CountNotInSecondTable =
+VAR ValuesInFirstTable = VALUES('Projects'[ProjectId])
+VAR ValuesInSecondTable = VALUES('ObjectivesValues'[Title])
+VAR ValuesNotInSecondTable = EXCEPT(ValuesInFirstTable, ValuesInSecondTable)
+RETURN
+COUNTROWS(ValuesNotInSecondTable)
+
+
+
