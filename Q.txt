@@ -15,3 +15,26 @@ COUNTROWS(ValuesNotInSecondTable)
 
 
 
+**********************************
+Max_month_name_
+اكثر شهر مبيعا فى السنة المختارة
+VAR vSummary =
+    ADDCOLUMNS (
+        VALUES ( 'CALENDAR'[month] ),
+        "cSumSales",
+            CALCULATE (
+                SUM ( products[price] )
+            )
+    )
+RETURN
+    MINX (
+        TOPN (
+            1,
+            vSummary,
+            [cSumSales], DESC
+        ),
+        'CALENDAR'[month]
+    )
+
+
+************************************
