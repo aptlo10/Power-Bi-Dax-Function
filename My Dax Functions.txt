@@ -233,3 +233,10 @@ CONCATENATEX(
     ASC
 )
 ***********************************************************
+**CONTAINSSTRING***
+Category = 
+IF(
+    CONTAINSSTRING( '1_main'[ConcatenatedStatuses], "CALL_HANGUP, CONNECTED" ),
+    "CONNECTED-CALL_HANGUP",
+    "0"
+)
