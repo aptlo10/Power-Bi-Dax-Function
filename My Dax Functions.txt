@@ -219,3 +219,17 @@ solve_2 =
  "CALL_NOT_PICKED",
  MAX('1_main'[statues _CALL_NOT_PICKED]))
 
+**************************
+
+ConcatenatedStatuses = 
+CONCATENATEX(
+    FILTER(
+        '1_main',
+        '1_main'[mobile number] = EARLIER( '1_main'[mobile number])
+    ),
+    '1_main'[statues _1],
+    ", ",
+    '1_main'[statues _1],
+    ASC
+)
+***********************************************************
