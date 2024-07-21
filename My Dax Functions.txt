@@ -165,3 +165,57 @@ DISTINCT(emp_2),emp_2[City],","
   ),LASTDATE(emp_2[sales_Date]))
   
 **************************************************
+
+use countx in SUMMARIZECOLUMNS
+
+COUNTX(
+SUMMARIZECOLUMNS(
+In_Revenue[DOC_ENAME],
+In_Revenue[PAK_NO],
+In_Revenue[PAT_CODE],
+In_Revenue[DIS_DATE],
+FILTER(In_Revenue,In_Revenue[DIS_DATE]<>BLANK())),
+COUNT(In_Revenue[PAK_NO]))
+
+*************************************************
+use countx in SUMMARIZE
+
+COUNTX(
+    SUMMARIZE(In_Revenue,
+In_Revenue[DOC_ENAME],
+In_Revenue[PAK_NO],
+In_Revenue[PAT_CODE],
+In_Revenue[DIS_DATE]),COUNT(In_Revenue[PAK_NO])
+
+**************************************************
+EARLIER count_if
+
+EARLIER = COUNTROWS(FILTER('1_main','1_main'[mobile number]=EARLIER('solve_1'[mobile number])))
+
+
+
+******************************************************************
+
+
+solve_1 = 
+ SUMMARIZECOLUMNS(
+ '1_main'[mobile number],
+ "CONNECTED",
+ min('1_main'[statues _1]),
+"CALL_HANGUP",
+ MAX('1_main'[statues _2]),
+ "CALL_NOT_PICKED",
+ MAX('1_main'[statues _CALL_NOT_PICKED]))
+
+***********************************************
+
+solve_2 = 
+ SUMMARIZECOLUMNS(
+ '1_main'[mobile number],
+ "CONNECTED",
+ MAX('1_main'[statues_CONNECTED]),
+"CALL_HANGUP",
+ MAX('1_main'[statues_CALL_HANGUP]),
+ "CALL_NOT_PICKED",
+ MAX('1_main'[statues _CALL_NOT_PICKED]))
+
