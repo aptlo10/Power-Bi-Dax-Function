@@ -240,3 +240,17 @@ IF(
     "CONNECTED-CALL_HANGUP",
     "0"
 )
+****************************
+/*
+حساب فرق الوقت مابين ساعات
+لحساب عدد الساعات الكلى
+*/
+TotalHoursSum = 
+VAR TotalMinutes = 
+    SUMX(
+        'Table',
+        (HOUR('Table'[total hours]) * 60) + MINUTE('Table'[total hours]) + (SECOND('Table'[total hours]) / 60)
+    )
+
+RETURN
+QUOTIENT(TotalMinutes, 60) & ":" & FORMAT(MOD(TotalMinutes, 60), "00")
